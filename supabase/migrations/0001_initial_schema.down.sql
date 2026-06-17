@@ -1,9 +1,9 @@
 -- ============================================================================
--- ROLLBACK for 0001_initial_schema + 0002_realtime (Section 9.10 — Rollback Plan)
+-- ROLLBACK for 0001–0004 (Section 9.10 — Rollback Plan)
 -- ----------------------------------------------------------------------------
--- Tested down path. Run order for a release rollback: roll back the APP deploy
--- first (Vercel instant rollback), then run this only if the schema change must
--- also be reverted. Destructive — back up data first (see README Rollback Runbook).
+-- Tested down path. Release rollback order: roll back the APP deploy first
+-- (Vercel instant rollback), then run this only if the schema must also revert.
+-- Destructive — back up data first (see README Rollback Runbook).
 -- ============================================================================
 
 -- Realtime (0002)
@@ -11,7 +11,7 @@ alter publication supabase_realtime drop table if exists public.activity;
 alter publication supabase_realtime drop table if exists public.queues;
 alter publication supabase_realtime drop table if exists public.queue_entries;
 
--- RPCs
+-- Customer RPCs
 drop function if exists public.leave_queue(uuid);
 drop function if exists public.entry_status(uuid);
 drop function if exists public.join_queue(uuid, text, integer, text);
@@ -30,11 +30,8 @@ drop table if exists public.business_members cascade;
 drop table if exists public.businesses cascade;
 drop table if exists public.profiles cascade;
 
--- Helper functions
-drop function if exists public.shares_business(text);
-drop function if exists public.is_admin(uuid);
-drop function if exists public.is_member(uuid);
-drop function if exists public.current_user_id();
+-- Private helper schema (0003)
+drop schema if exists private cascade;
 
 -- Enums
 drop type if exists public.entry_status;

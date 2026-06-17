@@ -12,6 +12,21 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split large, stable vendors into their own long-cached chunks.
+        manualChunks(id: string) {
+          if (id.includes('@clerk')) return 'vendor-clerk';
+          if (id.includes('@supabase')) return 'vendor-supabase';
+          if (/node_modules\/(react|react-dom|react-router|react-router-dom)\//.test(id)) {
+            return 'vendor-react';
+          }
+          return undefined;
+        },
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',

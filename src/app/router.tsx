@@ -9,6 +9,8 @@ import { QueuesOverview } from '@/features/queues/queues-overview';
 import { MembersPage } from '@/features/business/members-page';
 import { SettingsPage } from '@/features/business/settings-page';
 import { QueueBoardPage } from '@/features/board/queue-board-page';
+import { PublicQueuePage } from '@/features/customer/public-queue-page';
+import { StatusPage } from '@/features/customer/status-page';
 import { RouteError } from '@/components/route-error';
 
 /**
@@ -24,6 +26,9 @@ export const router = createBrowserRouter([
   { path: '/', element: <LandingPage />, errorElement: <RouteError /> },
   { path: '/sign-in/*', element: <SignInPage /> },
   { path: '/sign-up/*', element: <SignUpPage /> },
+  // Public customer flow (no auth) — entries are reached only via edge functions.
+  { path: '/q/:slug', element: <PublicQueuePage />, errorElement: <RouteError /> },
+  { path: '/q/:slug/status/:token', element: <StatusPage />, errorElement: <RouteError /> },
   {
     element: <ProtectedRoute />,
     errorElement: <RouteError />,

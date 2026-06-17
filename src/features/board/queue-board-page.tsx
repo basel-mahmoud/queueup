@@ -8,6 +8,7 @@ import { EmptyState, ErrorState } from '@/components/states';
 import { AddWalkInDialog } from '@/features/board/add-walkin-dialog';
 import { EntryCard } from '@/features/board/entry-card';
 import { useEntries, useUpdateEntryStatus, type Entry } from '@/features/board/api';
+import { useRealtimeEntries } from '@/features/board/use-realtime-entries';
 import { useQueue } from '@/features/queues/api';
 import type { EntryStatus } from '@/types/domain';
 import { getErrorMessage } from '@/utils/errors';
@@ -24,6 +25,7 @@ export function QueueBoardPage() {
   const queue = useQueue(qid);
   const { data: entries, isLoading, isError, error, refetch } = useEntries(qid);
   const updateStatus = useUpdateEntryStatus(qid);
+  useRealtimeEntries(qid);
 
   const act = async (entryId: string, status: EntryStatus) => {
     try {

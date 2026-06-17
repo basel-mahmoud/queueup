@@ -9,6 +9,7 @@ import { ErrorState } from '@/components/states';
 import { CustomerShell, formatEta } from '@/features/customer/customer-shell';
 import { tokenStorageKey } from '@/features/customer/join-form';
 import { useEntryStatus, useLeaveQueue, type EntryStatusResult } from '@/features/customer/api';
+import { useQueuePing } from '@/features/customer/use-queue-ping';
 import { getErrorMessage } from '@/utils/errors';
 import { TERMINAL_STATUSES } from '@/types/domain';
 
@@ -54,6 +55,9 @@ export function StatusPage() {
   const navigate = useNavigate();
   const { data, isLoading, isError, error, refetch } = useEntryStatus(token);
   const leave = useLeaveQueue();
+
+  // Instant refresh when the line moves (broadcast ping), on top of 5s polling.
+  useQueuePing(data?.queue_id, () => void refetch());
 
   const isTerminal = data ? TERMINAL_STATUSES.includes(data.status) : false;
 

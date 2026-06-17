@@ -7,6 +7,7 @@ import { useBusiness } from '@/features/business/api';
 
 const tabs = [
   { to: '.', label: 'Overview', end: true },
+  { to: 'activity', label: 'Activity', end: false },
   { to: 'members', label: 'Staff', end: false },
   { to: 'settings', label: 'Settings', end: false },
 ];

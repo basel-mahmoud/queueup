@@ -8,6 +8,7 @@ import { BusinessLayout } from '@/features/business/business-layout';
 import { QueuesOverview } from '@/features/queues/queues-overview';
 import { MembersPage } from '@/features/business/members-page';
 import { SettingsPage } from '@/features/business/settings-page';
+import { ActivityPage } from '@/features/activity/activity-page';
 import { QueueBoardPage } from '@/features/board/queue-board-page';
 import { PublicQueuePage } from '@/features/customer/public-queue-page';
 import { StatusPage } from '@/features/customer/status-page';
@@ -43,6 +44,7 @@ export const router = createBrowserRouter([
             element: <BusinessLayout />,
             children: [
               { index: true, element: <QueuesOverview /> },
+              { path: 'activity', element: <ActivityPage /> },
               { path: 'members', element: <MembersPage /> },
               { path: 'settings', element: <SettingsPage /> },
             ],

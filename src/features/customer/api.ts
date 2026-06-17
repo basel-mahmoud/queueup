@@ -27,6 +27,7 @@ export interface EntryStatusResult {
   people_ahead: number;
   eta_minutes: number;
   position_in_line: number;
+  queue_id: string;
   queue_name: string;
   business_name: string;
   customer_name: string;

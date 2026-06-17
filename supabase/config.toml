@@ -1,0 +1,21 @@
+# Supabase project configuration (CLI / local dev).
+# The remote project id is set after creation via the Supabase MCP.
+project_id = "queueup"
+
+[db]
+major_version = 17
+
+[realtime]
+enabled = true
+
+[functions.join-queue]
+verify_jwt = false
+
+[functions.entry-status]
+verify_jwt = false
+
+[functions.leave-queue]
+verify_jwt = false
+
+[functions.health]
+verify_jwt = false

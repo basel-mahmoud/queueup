@@ -73,7 +73,7 @@ export const joinQueueSchema = z.object({
     LIMITS.customerName.min,
     'Please enter your name',
   ),
-  party_size: z.coerce
+  party_size: z
     .number()
     .int()
     .min(LIMITS.partySize.min, 'Party size must be at least 1')
@@ -97,7 +97,7 @@ export type JoinTokenInput = z.infer<typeof joinTokenSchema>;
 export const addWalkInSchema = z.object({
   queue_id: z.string().uuid(),
   customer_name: trimmed(LIMITS.customerName.max).min(LIMITS.customerName.min),
-  party_size: z.coerce.number().int().min(LIMITS.partySize.min).max(LIMITS.partySize.max),
+  party_size: z.number().int().min(LIMITS.partySize.min).max(LIMITS.partySize.max),
   phone: z.string().trim().regex(PHONE_REGEX).optional().or(z.literal('')),
 });
 export type AddWalkInInput = z.infer<typeof addWalkInSchema>;

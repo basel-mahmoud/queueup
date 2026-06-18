@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import { ArrowRight, Clock, QrCode, Radio, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -40,16 +39,12 @@ export function LandingPage() {
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <SignedOut>
-            <Button asChild variant="ghost" size="sm">
-              <Link to="/sign-in">Sign in</Link>
-            </Button>
-          </SignedOut>
-          <SignedIn>
-            <Button asChild size="sm">
-              <Link to="/app">Dashboard</Link>
-            </Button>
-          </SignedIn>
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/sign-in">Sign in</Link>
+          </Button>
+          <Button asChild size="sm">
+            <Link to="/app">Dashboard</Link>
+          </Button>
         </div>
       </header>
 

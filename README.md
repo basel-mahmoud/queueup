@@ -2,7 +2,7 @@
 
 > Replace the clipboard at the counter. Customers join your line from their phone by scanning a QR code, watch their **live position and ETA**, and your staff run the whole queue from one screen — updates sync in real time across every device.
 
-[![CI](https://github.com/REPLACE_ME/queueup/actions/workflows/ci.yml/badge.svg)](https://github.com/REPLACE_ME/queueup/actions/workflows/ci.yml)
+[![CI](https://github.com/basel-mahmoud/queueup/actions/workflows/ci.yml/badge.svg)](https://github.com/basel-mahmoud/queueup/actions/workflows/ci.yml)
 &nbsp;[![Live demo](https://img.shields.io/badge/demo-live-4f46e5)](https://REPLACE_ME.vercel.app)
 &nbsp;![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
@@ -17,8 +17,8 @@
 
 **Sign in with the demo account** (staff side):
 
-| Email | Password |
-| --- | --- |
+| Email                                 | Password          |
+| ------------------------------------- | ----------------- |
 | `queueup.demo+clerk_test@example.com` | `QueueUpDemo123!` |
 
 > The Clerk instance is in development mode; if prompted for an email code, use `424242`.
@@ -36,19 +36,19 @@
 
 ## Tech stack
 
-| Layer | Choice |
-| --- | --- |
-| Language | TypeScript (strict, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`) |
-| Frontend | React 19 + Vite 8 |
-| Styling | Tailwind CSS v4 + shadcn/ui (Radix primitives) |
-| Data/state | TanStack Query + Zustand |
-| Forms/validation | React Hook Form + **Zod** (schemas shared client ↔ edge) |
-| Backend | Supabase — Postgres + RLS + Realtime + Edge Functions (Deno) |
-| Auth | **Clerk** (third-party-auth bridge to Supabase; JWT `sub` drives RLS) |
-| Hosting | Vercel (auto-deploy on push to `main`, per-PR previews) |
-| CI | GitHub Actions (lint · format · typecheck · test · build) |
-| Testing | Vitest + React Testing Library (unit/integration) |
-| Observability | Sentry (DSN-gated) + structured, redacted logging |
+| Layer            | Choice                                                                        |
+| ---------------- | ----------------------------------------------------------------------------- |
+| Language         | TypeScript (strict, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`) |
+| Frontend         | React 19 + Vite 8                                                             |
+| Styling          | Tailwind CSS v4 + shadcn/ui (Radix primitives)                                |
+| Data/state       | TanStack Query + Zustand                                                      |
+| Forms/validation | React Hook Form + **Zod** (schemas shared client ↔ edge)                      |
+| Backend          | Supabase — Postgres + RLS + Realtime + Edge Functions (Deno)                  |
+| Auth             | **Clerk** (third-party-auth bridge to Supabase; JWT `sub` drives RLS)         |
+| Hosting          | Vercel (auto-deploy on push to `main`, per-PR previews)                       |
+| CI               | GitHub Actions (lint · format · typecheck · test · build)                     |
+| Testing          | Vitest + React Testing Library (unit/integration)                             |
+| Observability    | Sentry (DSN-gated) + structured, redacted logging                             |
 
 ---
 
@@ -212,7 +212,7 @@ See the [Rollback Runbook](#rollback-runbook). Vercel deployments are immutable 
 **Prerequisites:** Node 22+, a Supabase project, a Clerk application connected to Supabase as a third-party auth provider.
 
 ```bash
-git clone https://github.com/REPLACE_ME/queueup.git
+git clone https://github.com/basel-mahmoud/queueup.git
 cd queueup
 npm install
 cp .env.example .env.local   # then fill in the values (see .env.example)
@@ -241,15 +241,19 @@ Covered: Zod validation incl. injection/XSS payloads, log redaction, error helpe
 ## Rollback Runbook
 
 **App (fastest):** roll back the app first.
+
 ```bash
 vercel rollback           # promote the previous deployment (instant, no rebuild)
 # or in the Vercel dashboard: Deployments → previous → Promote to Production
 ```
+
 **Git:** `git revert <sha> && git push` — never force-push shared history.
 **Database (only if a migration must be undone):** back up first, then apply the down migration:
+
 ```bash
 psql "$DATABASE_URL" -f supabase/migrations/0001_initial_schema.down.sql
 ```
+
 Order: roll back the app, then the DB if needed.
 
 ## Roadmap

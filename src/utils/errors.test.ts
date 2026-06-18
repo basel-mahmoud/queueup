@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
-import {
-  ApiError,
-  GENERIC_ERROR_MESSAGE,
-  getErrorMessage,
-  isRateLimitError,
-} from '@/utils/errors';
+import { ApiError, GENERIC_ERROR_MESSAGE, getErrorMessage, isRateLimitError } from '@/utils/errors';
 
 describe('error helpers (Section 9.6)', () => {
   it('surfaces a Zod issue message', () => {

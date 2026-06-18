@@ -40,7 +40,11 @@ const boardPage = () => import('@/features/board/queue-board-page');
  */
 export const router = createBrowserRouter([
   { path: '/', element: <LandingPage />, errorElement: <RouteError /> },
-  { path: '/q/:slug', element: lazyRoute(customer, 'PublicQueuePage'), errorElement: <RouteError /> },
+  {
+    path: '/q/:slug',
+    element: lazyRoute(customer, 'PublicQueuePage'),
+    errorElement: <RouteError />,
+  },
   {
     path: '/q/:slug/status/:token',
     element: lazyRoute(status, 'StatusPage'),
@@ -70,7 +74,10 @@ export const router = createBrowserRouter([
                   { path: 'settings', element: lazyRoute(settingsPage, 'SettingsPage') },
                 ],
               },
-              { path: 'b/:businessId/queues/:queueId', element: lazyRoute(boardPage, 'QueueBoardPage') },
+              {
+                path: 'b/:businessId/queues/:queueId',
+                element: lazyRoute(boardPage, 'QueueBoardPage'),
+              },
             ],
           },
         ],

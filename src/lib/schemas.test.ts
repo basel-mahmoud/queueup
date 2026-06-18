@@ -68,8 +68,12 @@ describe('input validation (Section 9.2)', () => {
   });
 
   it('bounds avg service minutes', () => {
-    expect(queueCreateSchema.safeParse({ name: 'Cut', avg_service_minutes: 0 }).success).toBe(false);
-    expect(queueCreateSchema.safeParse({ name: 'Cut', avg_service_minutes: 20 }).success).toBe(true);
+    expect(queueCreateSchema.safeParse({ name: 'Cut', avg_service_minutes: 0 }).success).toBe(
+      false,
+    );
+    expect(queueCreateSchema.safeParse({ name: 'Cut', avg_service_minutes: 20 }).success).toBe(
+      true,
+    );
   });
 
   it('validates invite email + role', () => {

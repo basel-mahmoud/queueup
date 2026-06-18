@@ -1,0 +1,11 @@
+dist
+coverage
+node_modules
+playwright-report
+package-lock.json
+# Generated from the live schema
+src/types/supabase.ts
+# Deno edge functions (npm: specifiers) — formatted/owned separately
+supabase/functions
+# SQL migrations (prettier has no SQL parser)
+supabase/migrations

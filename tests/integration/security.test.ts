@@ -9,7 +9,11 @@ const ANON = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 const ready = Boolean(URL && ANON);
 
 describe.skipIf(!ready)('RLS authorization (Section 9.1)', () => {
-  const anon = createClient(URL!, ANON!, { auth: { persistSession: false } });
+  // Fallback values keep collection from throwing in CI (where env is absent);
+  // these tests are skipped (skipIf) unless real env is present, so they're unused.
+  const anon = createClient(URL ?? 'http://localhost:54321', ANON ?? 'test-anon-key', {
+    auth: { persistSession: false },
+  });
 
   it('blocks anonymous reads of customer PII in queue_entries', async () => {
     // Rows exist (seeded), but RLS grants anon NO access to this table.

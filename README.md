@@ -3,7 +3,7 @@
 > Replace the clipboard at the counter. Customers join your line from their phone by scanning a QR code, watch their **live position and ETA**, and your staff run the whole queue from one screen — updates sync in real time across every device.
 
 [![CI](https://github.com/basel-mahmoud/queueup/actions/workflows/ci.yml/badge.svg)](https://github.com/basel-mahmoud/queueup/actions/workflows/ci.yml)
-&nbsp;[![Live demo](https://img.shields.io/badge/demo-live-4f46e5)](https://REPLACE_ME.vercel.app)
+&nbsp;[![Live demo](https://img.shields.io/badge/demo-live-4f46e5)](https://queueup-wheat.vercel.app)
 &nbsp;![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 <!-- HERO: drop a screenshot/GIF of the staff board + customer status side by side here -->
@@ -13,7 +13,7 @@
 
 ## 🔗 Live demo
 
-**App:** https://REPLACE_ME.vercel.app &nbsp;·&nbsp; **Try the customer flow (no login):** https://REPLACE_ME.vercel.app/q/snip-and-style
+**App:** https://queueup-wheat.vercel.app &nbsp;·&nbsp; **Try the customer flow (no login):** https://queueup-wheat.vercel.app/q/snip-and-style
 
 **Sign in with the demo account** (staff side):
 

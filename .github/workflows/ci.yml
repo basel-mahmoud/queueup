@@ -33,17 +33,10 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      # Integration tests self-skip without Supabase env; unit tests always run.
       - name: Unit + integration tests
         run: npm run test:run
-        env:
-          # Integration tests self-skip without these; safe public values.
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
+      # Build reads publishable values from the committed .env.production.
       - name: Build
         run: npm run build
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
-          VITE_ENV: production

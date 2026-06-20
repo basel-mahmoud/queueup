@@ -37,12 +37,13 @@ Deno.serve(async (req) => {
     return errorResponse(parsed.error.issues[0]?.message ?? 'Invalid input', 400, origin);
   }
 
-  const { queue_id, customer_name, party_size, phone } = parsed.data;
+  const { queue_id, customer_name, party_size, phone, idempotency_key } = parsed.data;
   const { data, error } = await supabase.rpc('join_queue', {
     p_queue_id: queue_id,
     p_name: customer_name,
     p_party: party_size,
     p_phone: phone || null,
+    p_idem: idempotency_key ?? null,
   });
 
   if (error) {

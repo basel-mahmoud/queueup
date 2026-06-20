@@ -40,3 +40,17 @@ jobs:
       # Build reads publishable values from the committed .env.production.
       - name: Build
         run: npm run build
+
+  security:
+    name: Dependency vulnerability scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Fail on high/critical advisories so they get patched promptly.
+      - name: npm audit
+        run: npm audit --audit-level=high

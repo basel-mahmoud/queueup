@@ -88,9 +88,33 @@ export function usePublicQueueData(slug: string | undefined) {
   });
 }
 
+/** Retry transient edge failures (429/5xx/network) with exponential backoff.
+ *  Safe only because the join is idempotent: the same key never double-joins. */
+async function callEdgeWithRetry<T>(name: string, body: unknown, retries = 3): Promise<T> {
+  let attempt = 0;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      return await callEdge<T>(name, body);
+    } catch (err) {
+      attempt++;
+      const transient = err instanceof ApiError && (err.status === 429 || err.status >= 500);
+      if (attempt > retries || !transient) throw err;
+      const backoff = Math.min(4000, 300 * 2 ** (attempt - 1));
+      await new Promise((r) => setTimeout(r, backoff + Math.random() * backoff * 0.3));
+    }
+  }
+}
+
 export function useJoinQueue() {
   return useMutation({
-    mutationFn: (input: JoinQueueInput) => callEdge<JoinResult>('join-queue', input),
+    // One idempotency key per logical submission; reused across retries so a
+    // dropped response or double-tap can never create a second queue entry.
+    mutationFn: (input: JoinQueueInput) =>
+      callEdgeWithRetry<JoinResult>('join-queue', {
+        ...input,
+        idempotency_key: crypto.randomUUID(),
+      }),
   });
 }
 

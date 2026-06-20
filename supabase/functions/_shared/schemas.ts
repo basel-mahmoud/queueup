@@ -10,6 +10,8 @@ export const joinQueueSchema = z.object({
   customer_name: z.string().trim().min(1).max(80),
   party_size: z.coerce.number().int().min(1).max(20),
   phone: z.string().trim().regex(PHONE_REGEX).optional().or(z.literal('')),
+  // Client-generated key so a retried / double-submitted join is de-duplicated.
+  idempotency_key: z.string().uuid().optional(),
 });
 
 export const joinTokenSchema = z.object({

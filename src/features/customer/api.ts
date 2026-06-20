@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { supabasePublic } from '@/lib/supabase';
 import { env } from '@/lib/env';
 import { ApiError } from '@/utils/errors';
+import { CircuitBreaker } from '@/lib/circuit-breaker';
 import type { Tables } from '@/types/supabase';
 import type { EntryStatus } from '@/types/domain';
 import type { JoinQueueInput } from '@/lib/schemas';
@@ -106,15 +107,21 @@ async function callEdgeWithRetry<T>(name: string, body: unknown, retries = 3): P
   }
 }
 
+// Opens after repeated join failures so users fail fast instead of all retrying
+// against a struggling backend.
+const joinBreaker = new CircuitBreaker('Joining the queue', 5, 15_000);
+
 export function useJoinQueue() {
   return useMutation({
     // One idempotency key per logical submission; reused across retries so a
     // dropped response or double-tap can never create a second queue entry.
     mutationFn: (input: JoinQueueInput) =>
-      callEdgeWithRetry<JoinResult>('join-queue', {
-        ...input,
-        idempotency_key: crypto.randomUUID(),
-      }),
+      joinBreaker.run(() =>
+        callEdgeWithRetry<JoinResult>('join-queue', {
+          ...input,
+          idempotency_key: crypto.randomUUID(),
+        }),
+      ),
   });
 }
 
